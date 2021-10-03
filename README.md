@@ -2,7 +2,7 @@
 
 ## Overview
 
-A basic REST API written using Spring. This service contains one endpoint `/greeting`, which returns a `"Hello, World!"` response.
+A basic REST API written using Spring Boot. This service contains one endpoint `/greeting`, which returns a `"Hello, World!"` response.
 
 This project also contains unit and integration tests.
 
