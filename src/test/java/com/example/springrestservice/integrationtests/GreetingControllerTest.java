@@ -1,7 +1,7 @@
-package com.example.springrestservice.integrationtests.controllers;
+package com.example.springrestservice.integrationtests;
 
 import com.example.springrestservice.records.Greeting;
-import com.example.springrestservice.unittests.controllers.GreetingController;
+import com.example.springrestservice.controllers.GreetingController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
