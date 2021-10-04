@@ -14,7 +14,7 @@ public class GreetingControllerTest {
         Greeting expected = new Greeting("Hello, Test!");
 
         // Act
-        Greeting result = controller.greeting("Test");
+        Greeting result = controller.getGreeting("Test");
 
         // Assert
         assertEquals(expected, result);
