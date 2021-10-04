@@ -2,7 +2,9 @@
 
 ## Overview
 
-A basic REST API written using Spring Boot. This service contains one endpoint `/greeting`, which returns a `"Hello, World!"` response.
+A web service written using Spring Boot. The endpoints in this service are shown in the Swagger UI screenshot below:
+
+![image](https://user-images.githubusercontent.com/5192095/135779414-0f2acae4-11bb-4fc0-bfc5-002ee2f82dfd.png)
 
 This project also contains unit and integration tests.
 
