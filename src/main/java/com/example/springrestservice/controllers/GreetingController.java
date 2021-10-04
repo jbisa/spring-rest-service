@@ -1,4 +1,4 @@
-package com.example.springrestservice.unittests.controllers;
+package com.example.springrestservice.controllers;
 
 import com.example.springrestservice.records.Greeting;
 import org.springframework.web.bind.annotation.GetMapping;
