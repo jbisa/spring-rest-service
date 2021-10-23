@@ -1,6 +1,7 @@
 package com.example.springrestservice.controllers;
 
 import com.example.springrestservice.records.Message;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @RestController
 public class MessageController {
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      * The following URL is from a free fake API for testing purposes. Although the endpoint is called "posts", I'm
@@ -22,7 +26,6 @@ public class MessageController {
         Message[] messages = null;
 
         try {
-            RestTemplate restTemplate = new RestTemplate();
             messages = restTemplate.getForObject(POSTS_API_URL, Message[].class);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -36,7 +39,6 @@ public class MessageController {
         Message message = new Message();
 
         try {
-            RestTemplate restTemplate = new RestTemplate();
             message = restTemplate.getForObject(POSTS_API_URL + id, Message.class);
         } catch (Exception ex) {
             ex.printStackTrace();
