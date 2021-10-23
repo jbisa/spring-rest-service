@@ -1,68 +1,46 @@
 package com.example.springrestservice.controllers;
 
-import com.example.springrestservice.records.Message;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.springrestservice.records.MessageResponse;
+import com.example.springrestservice.services.MessageService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class MessageController {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final MessageService messageService;
 
-    @Autowired
-    private WebClient.Builder webClientBuilder;
-
-    /**
-     * The following URL is from a free fake API for testing purposes. Although the endpoint is called "posts", I'm
-     * treating this resource as "messages" (data is mapped to my Message.java class).
-     */
-    private static final String POSTS_API_URL = "https://jsonplaceholder.typicode.com/posts/";
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @GetMapping("/messages")
-    public List<Message> getMessages() {
-        Message[] messages = null;
-
-        try {
-            messages = webClientBuilder.build()
-                    .get()
-                    .uri(POSTS_API_URL)
-                    .retrieve()
-                    .bodyToMono(Message[].class)
-                    .block();
-
-            //messages = restTemplate.getForObject(POSTS_API_URL, Message[].class);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return Arrays.asList(messages);
+    @ApiOperation("Retrieves all messages.")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved all messages.") })
+    public MessageResponse getMessages() {
+        return this.messageService.getMessages();
     }
 
     @GetMapping("/messages/{id}")
-    public Message getMessage(@PathVariable Long id) {
-        Message message = new Message();
+    @ApiOperation("Retrieves a message based on an Id.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved message by Id."),
+            @ApiResponse(code = 404, message = "No message found for the given Id.")
+    })
+    public ResponseEntity<MessageResponse> getMessageById(@PathVariable Long id) {
+        MessageResponse result = this.messageService.getMessageById(id);
 
-        try {
-            message = webClientBuilder.build()
-                    .get()
-                    .uri(POSTS_API_URL + id)
-                    .retrieve()
-                    .bodyToMono(Message.class)
-                    .block();
-
-            //message = restTemplate.getForObject(POSTS_API_URL + id, Message.class);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (result.messages().size() > 0) {
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No message found for Id: " + id);
         }
-
-        return message;
     }
 }
