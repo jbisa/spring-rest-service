@@ -1,8 +1,5 @@
 package com.example.springrestservice.records;
 
-public record Greeting(String content) {
+public record Greeting(String greeting) {
 
-    public String getContent() {
-        return content;
-    }
 }
