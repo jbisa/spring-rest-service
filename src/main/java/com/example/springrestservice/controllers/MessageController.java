@@ -23,9 +23,7 @@ public class MessageController {
 
         try {
             RestTemplate restTemplate = new RestTemplate();
-
-            messages = restTemplate
-                    .getForObject(POSTS_API_URL, Message[].class);
+            messages = restTemplate.getForObject(POSTS_API_URL, Message[].class);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -39,9 +37,7 @@ public class MessageController {
 
         try {
             RestTemplate restTemplate = new RestTemplate();
-
-            message = restTemplate
-                    .getForObject(POSTS_API_URL + id, Message.class);
+            message = restTemplate.getForObject(POSTS_API_URL + id, Message.class);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
