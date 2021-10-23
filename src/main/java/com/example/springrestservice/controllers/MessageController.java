@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,6 +16,9 @@ public class MessageController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private WebClient.Builder webClientBuilder;
 
     /**
      * The following URL is from a free fake API for testing purposes. Although the endpoint is called "posts", I'm
@@ -26,7 +31,14 @@ public class MessageController {
         Message[] messages = null;
 
         try {
-            messages = restTemplate.getForObject(POSTS_API_URL, Message[].class);
+            messages = webClientBuilder.build()
+                    .get()
+                    .uri(POSTS_API_URL)
+                    .retrieve()
+                    .bodyToMono(Message[].class)
+                    .block();
+
+            //messages = restTemplate.getForObject(POSTS_API_URL, Message[].class);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -39,7 +51,14 @@ public class MessageController {
         Message message = new Message();
 
         try {
-            message = restTemplate.getForObject(POSTS_API_URL + id, Message.class);
+            message = webClientBuilder.build()
+                    .get()
+                    .uri(POSTS_API_URL + id)
+                    .retrieve()
+                    .bodyToMono(Message.class)
+                    .block();
+
+            //message = restTemplate.getForObject(POSTS_API_URL + id, Message.class);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
