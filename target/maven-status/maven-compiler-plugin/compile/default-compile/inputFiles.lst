@@ -1,3 +1,6 @@
 /mnt/c/Users/jaybi/Dev/java/spring-rest-service/src/main/java/com/example/springrestservice/SpringRestServiceApplication.java
 /mnt/c/Users/jaybi/Dev/java/spring-rest-service/src/main/java/com/example/springrestservice/records/Greeting.java
+/mnt/c/Users/jaybi/Dev/java/spring-rest-service/src/main/java/com/example/springrestservice/records/Message.java
 /mnt/c/Users/jaybi/Dev/java/spring-rest-service/src/main/java/com/example/springrestservice/controllers/GreetingController.java
+/mnt/c/Users/jaybi/Dev/java/spring-rest-service/src/main/java/com/example/springrestservice/swagger/SpringFoxConfig.java
+/mnt/c/Users/jaybi/Dev/java/spring-rest-service/src/main/java/com/example/springrestservice/controllers/MessageController.java
