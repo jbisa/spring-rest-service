@@ -1,7 +1,7 @@
 package com.example.springrestservice.controllers;
 
 import com.example.springrestservice.records.MessageResponse;
-import com.example.springrestservice.services.MessageService;
+import com.example.springrestservice.services.IService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -15,9 +15,9 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class MessageController {
 
-    private final MessageService messageService;
+    private final IService<MessageResponse> messageService;
 
-    public MessageController(MessageService messageService) {
+    public MessageController(IService messageService) {
         this.messageService = messageService;
     }
 
@@ -25,7 +25,7 @@ public class MessageController {
     @ApiOperation("Retrieves all messages.")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved all messages.") })
     public MessageResponse getMessages() {
-        return this.messageService.getMessages();
+        return this.messageService.get();
     }
 
     @GetMapping("/messages/{id}")
@@ -34,8 +34,8 @@ public class MessageController {
             @ApiResponse(code = 200, message = "Successfully retrieved message by Id."),
             @ApiResponse(code = 404, message = "No message found for the given Id.")
     })
-    public ResponseEntity<MessageResponse> getMessageById(@PathVariable Long id) {
-        MessageResponse result = this.messageService.getMessageById(id);
+    public ResponseEntity<MessageResponse> getMessageById(@PathVariable long id) {
+        MessageResponse result = this.messageService.getById(id);
 
         if (result.messages().size() > 0) {
             return ResponseEntity.status(HttpStatus.OK).body(result);
