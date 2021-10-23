@@ -4,9 +4,7 @@
 
 A web service written using Spring Boot.
 
-This project also contains unit and integration tests for each endpoint. Endpoint documentation in this service are shown in the Swagger UI screenshot below (reachable via http://localhost:8081/swagger-ui/index.html):
-
-![image](https://user-images.githubusercontent.com/5192095/135779414-0f2acae4-11bb-4fc0-bfc5-002ee2f82dfd.png)
+This project also contains unit and integration tests for each endpoint. Documentation for each endpoint in this service is shown in the Swagger UI (reachable via http://localhost:8081/swagger-ui/index.html).
 
 ## How to Run
 
