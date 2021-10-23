@@ -25,8 +25,7 @@ public class MessageController {
             RestTemplate restTemplate = new RestTemplate();
 
             messages = restTemplate
-                    .getForEntity(POSTS_API_URL, Message[].class)
-                    .getBody();
+                    .getForObject(POSTS_API_URL, Message[].class);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -42,8 +41,7 @@ public class MessageController {
             RestTemplate restTemplate = new RestTemplate();
 
             message = restTemplate
-                    .getForEntity(POSTS_API_URL + id, Message.class)
-                    .getBody();
+                    .getForObject(POSTS_API_URL + id, Message.class);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
