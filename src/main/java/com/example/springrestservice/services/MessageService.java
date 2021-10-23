@@ -2,29 +2,25 @@ package com.example.springrestservice.services;
 
 import com.example.springrestservice.records.Message;
 import com.example.springrestservice.records.MessageResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import java.util.List;
 
 @Service
-public class MessageService {
+public class MessageService implements IService<MessageResponse> {
 
-    @Autowired
-    private WebClient.Builder webClientBuilder;
+    private final WebClient webClient;
 
-    /**
-     * The following URL is from a free fake API for testing purposes. Although the endpoint is called "posts", I'm
-     * treating this resource as "messages" (data is mapped to my Message.java class).
-     */
-    private static final String POSTS_API_URL = "https://jsonplaceholder.typicode.com/posts/";
+    public MessageService(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl(MessageServiceConstants.BASE_URL).build();
+    }
 
-    public MessageResponse getMessages() {
+    @Override
+    public MessageResponse get() {
         try {
-            List<Message> messages = webClientBuilder
-                    .build()
+            List<Message> messages = this.webClient
                     .get()
-                    .uri(POSTS_API_URL)
+                    .uri(MessageServiceConstants.POSTS_URL)
                     .retrieve()
                     .bodyToFlux(Message.class)
                     .collectList()
@@ -38,12 +34,12 @@ public class MessageService {
         return new MessageResponse();
     }
 
-    public MessageResponse getMessageById(Long id) {
+    @Override
+    public MessageResponse getById(long id) {
         try {
-            List<Message> messages = webClientBuilder
-                    .build()
+            List<Message> messages = this.webClient
                     .get()
-                    .uri(POSTS_API_URL + id)
+                    .uri(MessageServiceConstants.POSTS_BY_ID_URL, id)
                     .retrieve()
                     .bodyToFlux(Message.class)
                     .collectList()
